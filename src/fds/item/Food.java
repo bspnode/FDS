@@ -1,17 +1,17 @@
 ﻿package fds.item;
 
-//==============================================//
-// File: Food.java                              //
-// Author: Austin Tavares                       //
-// Date: 11/09/2024                             //
-// Purpose: Generic Food Items (to be sold)     //
-//==============================================//
+/**
+ * Food class is a generic class for food items to be sold.
+ * @author Austin Tavares
+ * @brief Generic Food Items (to be sold)
+ * @since 1.0
+ */
 public abstract class Food
 {
-    private String name;
-    private double price;
-    private double calories;
-    private double weight;
+    private String  name;
+    private double  price;
+    private double  calories;
+    private double  weight;
 
     public Food(String name, double price, double calories, double weight)
     {
@@ -67,5 +67,10 @@ public abstract class Food
     public void setWeight(double weight)
     {
         this.weight = weight;
+    }
+
+    public boolean available()
+    {
+        return true;
     }
 }
