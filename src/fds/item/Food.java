@@ -1,4 +1,4 @@
-﻿package fds.item;
+package fds.item;
 
 /**
  * Food class is a generic class for food items to be sold.
