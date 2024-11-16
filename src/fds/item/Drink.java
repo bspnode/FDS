@@ -1,4 +1,4 @@
-﻿package fds.item;
+package fds.item;
 
 //==============================================//
 // File: Drink.java                             //
