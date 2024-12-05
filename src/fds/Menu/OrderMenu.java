@@ -12,6 +12,10 @@ public class OrderMenu extends BaseMenu {
         super(menuItems);
     }
 
+    public OrderMenu() {
+        super();
+    }
+
     // Method to confirm a new order by adding it to the order queue
     public void confirmOrder(Orders newOrder)
     {
@@ -27,14 +31,14 @@ public class OrderMenu extends BaseMenu {
 
     // Method to print out the menu with food items and their prices
     public void printMenu() {
-        System.out.println("Menu");
+        System.out.println(cuisineType + " Menu");
         System.out.println("====");
 
         // Loop through the menu items and display their names and prices
         for(int i = 1; i <= menuItems.size(); i++)
         {
             // Print the item number, name, and price
-            System.out.printf("%d. %-10s : $%.2f%n", i, menuItems.get(i-1).getName(), menuItems.get(i-1).getPrice());
+            System.out.printf("%d. %-30s : $%.2f%n", i, menuItems.get(i-1).getName(), menuItems.get(i-1).getPrice());
         }
     }
 }

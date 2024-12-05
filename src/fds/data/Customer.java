@@ -9,10 +9,13 @@ package fds.data;
  * @author ISRAEL AGUINIGA
  */
 
+import fds.Menu.BaseMenu;
 import fds.item.Food;
+import fds.order.Orders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Customer extends Person {
 
@@ -46,24 +49,19 @@ public class Customer extends Person {
 
 
     //submitOrder method - submits an order for the customer
-    public void submitOrder(List<Food> order) {
-        if (order == null || order.isEmpty()) {
-            System.out.println("Order is empty. Please add items to your order.");
-            return;
+    public Orders buildOrder(BaseMenu menu) {
+        Orders o1 = new Orders(this, "", 0);
+        menu.printMenu();
+        System.out.println("Type in which items you would like, one at a time\nType -1 when you are finished");
+        Scanner sc = new Scanner(System.in);
+        int x = sc.nextInt();
+        while(x != -1)
+        {
+            o1.addToOrder(menu.getItem(x));
+            x = sc.nextInt();
         }
-
-        double totalCost = 0.0;
-        for (Food item : order) {
-            totalCost += item.getPrice();
-        }
-
-        if (totalCost > balance) {
-            System.out.println("Insufficient balance. Please add funds to your account.");
-            return;
-        }
-
-        balance -= totalCost;
-        System.out.println("Order submitted successfully. Total cost: $" + totalCost);
+        o1.calculateTotal();
+        return o1;
     }
 
     //rateOrder method - rates the delivery driver and food

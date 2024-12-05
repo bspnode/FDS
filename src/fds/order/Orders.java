@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Orders {
     // List of foods in the order
-    ArrayList<Food> order;
+    ArrayList<Food> order = new ArrayList<>();
 
     // Customer associated with the order
     Person customer;
@@ -25,7 +25,7 @@ public class Orders {
     String status;
 
     // Constructor to initialize the order with given values
-    public Orders(ArrayList<Food> order, Person customer, String orderID, double total) {
+    public Orders(Person customer, String orderID, double total) {
         this.order = order;
         this.customer = customer;
         this.orderID = orderID;
@@ -78,5 +78,17 @@ public class Orders {
     // Getter method to retrieve the current status of the order
     public String getStatus() {
         return status;
+    }
+
+    public void addToOrder(Food f){
+        order.add(f);
+        total += f.getPrice();
+    }
+
+    public void calculateTotal(){
+        total = 0;
+        for(int i = 0; i < order.size(); i++){
+            total += order.get(i).getPrice();
+        }
     }
 }

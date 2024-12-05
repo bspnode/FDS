@@ -1,5 +1,8 @@
 package fds.data;
 
+import fds.Menu.BaseMenu;
+import fds.order.Orders;
+
 /**
  * Person class is a superclass for the Customer and DeliveryDriver classes. It represents a person in the food delivery service.
  * The class contains instance variables for the person's name, age, address, phone, email, and password.
@@ -83,13 +86,12 @@ public class Person {
     }
 
 
+    public Orders buildOrder(BaseMenu baseMenu) {
+        return null;
+    }
 
-
-
-
-
-
-
-
-
+    public boolean isDeliveryDriver()
+    {
+        return false;
+    }
 }

@@ -29,6 +29,11 @@ public abstract class Food
         weight = food.weight;
     }
 
+    public Food()
+    {
+
+    }
+
     public String getName()
     {
         return name;
@@ -73,4 +78,5 @@ public abstract class Food
     {
         return true;
     }
+
 }

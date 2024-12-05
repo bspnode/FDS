@@ -1,6 +1,8 @@
 package fds.data;
 
 
+import fds.order.Orders;
+
 /**
  * DeliveryDriver class is a subclass of Person class. It represents a delivery driver for the food delivery service.
  * The class contains instance variables for the driver's rating, money earned, availability, and rating count.
@@ -16,6 +18,7 @@ public class DeliveryDriver extends Person{
     double moneyEarned;
     boolean isAvailable;
     int ratingCount;
+    Orders order;
 
 
 
@@ -76,5 +79,18 @@ public class DeliveryDriver extends Person{
         System.out.println("Order processed. Total earnings: " + this.moneyEarned);
     }
 
+    public boolean isDeliveryDriver()
+    {
+        return true;
+    }
+
+
+    public void setOrder(Orders order) {
+        this.order = order;
+    }
+
+    public Orders getOrder() {
+        return order;
+    }
 
 }
