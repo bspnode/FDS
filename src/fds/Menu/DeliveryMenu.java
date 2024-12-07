@@ -5,68 +5,101 @@ import fds.data.Person;
 import fds.item.Food;
 import fds.order.Orders;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
 
+/**
+ * Represents a specialized menu for delivery orders in the food delivery service.
+ *
+ * Features:
+ * - Manages a queue of delivery drivers and processes delivery-specific orders.
+ * - Ensures address validation before confirming an order.
+ * - Inherits functionality from {@code BaseMenu} and extends it with delivery-specific behavior.
+ *
+ * @brief Delivery-specific menu system.
+ * @author Jacob Rossel
+ * @version 1.0
+ * @since 2024-12-07
+ */
 public class DeliveryMenu extends BaseMenu {
-    // Queue to manage the delivery drivers
-    Queue<DeliveryDriver> driverQueue = new LinkedList<DeliveryDriver>();
 
-    // Constructor to initialize DeliveryMenu with a list of Food items
+    /** A queue to manage the delivery drivers available for assigning orders. */
+    private Queue<DeliveryDriver> driverQueue = new LinkedList<>();
+
+    /**
+     * Constructs a new {@code DeliveryMenu} with a specified list of food items.
+     *
+     * @param menuItems A list of {@code Food} items to initialize the delivery menu.
+     */
     public DeliveryMenu(ArrayList<Food> menuItems) {
         super(menuItems);
     }
 
+    /**
+     * Default constructor for {@code DeliveryMenu}, initializing an empty menu and driver queue.
+     */
     public DeliveryMenu() {
         super();
     }
 
-    // Method to confirm an order, ensuring the address is correct before processing
-    public void confirmOrder(Orders newOrder)
-    {
-        // Ask if the current address on the order is correct
+    /**
+     * Confirms an order after validating the delivery address.
+     * If the address is incorrect, prompts the customer to update it before placing the order.
+     *
+     * @param newOrder The {@code Orders} object to be confirmed and added to the queue.
+     */
+    @Override
+    public void confirmOrder(Orders newOrder) {
         System.out.println("Is this still the correct address: " + newOrder.getCustomer().getAddress() + "?");
 
-        // Create a scanner object to capture user input
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); // Scanner for user input
+        String response = sc.nextLine().trim().toLowerCase();
 
-        // If the user confirms the address, place the order
-        if(sc.nextLine().toLowerCase().equals("yes"))
-        {
-            orderQueue.add(newOrder); // Add the new order to the order queue
-            System.out.println("Order has been placed!"); // Output confirmation
-            newOrder.setStatus("Placed"); // Set the order status to "Placed"
-        }
-        else {
-            // If the address is incorrect, prompt the user to enter a new address
+        if (response.equals("yes")) {
+            orderQueue.add(newOrder);
+            System.out.println("Order has been placed!");
+            newOrder.setStatus("Placed");
+        } else {
             System.out.println("Please update your address:");
-            newOrder.getCustomer().setAddress(sc.nextLine()); // Update the address
-            orderQueue.add(newOrder); // Add the order to the queue
-            System.out.println("Order has been placed!"); // Output confirmation
-            newOrder.setStatus("Placed"); // Set the order status to "Placed"
+            String newAddress = sc.nextLine();
+            newOrder.getCustomer().setAddress(newAddress);
+            orderQueue.add(newOrder);
+            System.out.println("Order has been placed!");
+            newOrder.setStatus("Placed");
         }
     }
 
-    // Method to print the menu with food items and their prices
+    /**
+     * Prints the menu items along with their prices, formatted in a clear and readable way.
+     */
+    @Override
     public void printMenu() {
-        System.out.println(cuisineType + " Menu");
+        System.out.println(getCuisineType() + " Menu");
         System.out.println("====");
 
-        // Loop through the menu items and display their names and prices
-        for(int i = 1; i <= menuItems.size(); i++)
-        {
-            // Print the item number, name, and price
-            System.out.printf("%d. %-30s : $%.2f%n", i, menuItems.get(i-1).getName(), menuItems.get(i-1).getPrice());
+        for (int i = 1; i <= menuItems.size(); i++) {
+            System.out.printf("%d. %-30s : $%.2f%n", i, menuItems.get(i - 1).getName(), menuItems.get(i - 1).getPrice());
         }
     }
 
-
-    public void buildOrder(Person C1)
-    {
-
+    /**
+     * Builds an order for a given person. This method is currently not implemented.
+     *
+     * @param customer The {@code Person} object representing the customer placing the order.
+     */
+    public void buildOrder(Person customer) {
+        // Implementation to be added as required
     }
 
-    public boolean isDelivery()
-    {
+    /**
+     * Indicates whether this menu is for a delivery service.
+     *
+     * @return {@code true}, as this menu is specifically for delivery orders.
+     */
+    @Override
+    public boolean isDelivery() {
         return true;
     }
 }

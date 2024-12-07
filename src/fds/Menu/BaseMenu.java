@@ -1,78 +1,140 @@
-package fds.Menu;  // Package declaration for the menu system
+package fds.Menu;
 
-import fds.item.Food;  // Importing the Food class from the item package
-import fds.order.Orders;  // Importing the Orders class from the order package
+import fds.item.Food; // Importing the Food class
+import fds.order.Orders; // Importing the Orders class
 
-import java.util.LinkedList;  // Importing the LinkedList class (used for implementing queues)
-import java.util.Queue;  // Importing the Queue interface
-import java.util.ArrayList;  // Importing the ArrayList class (used for storing menu items)
+import java.util.LinkedList; // Importing LinkedList for queue implementation
+import java.util.Queue; // Importing the Queue interface
+import java.util.ArrayList; // Importing ArrayList for menu items storage
 
+/**
+ * Represents the base class for menu systems in the food delivery service.
+ *
+ * Features:
+ * - Manages a list of menu items and a queue of orders to be processed.
+ * - Provides methods for confirming orders, retrieving menu items, and managing the order queue.
+ * - Can be extended by specific menu types to implement specialized behavior.
+ *
+ * @author Jacob Rossel
+ * @version 1.0
+ * @since 2024-12-07
+ */
+public abstract class BaseMenu {
 
-public abstract class BaseMenu {  // Declaring an abstract class 'BaseMenu' to serve as the base class for menu systems
-    Queue<Orders> orderQueue;  // A queue to hold orders that need to be processed
-    ArrayList<Food> menuItems;  // A list to hold the food items on the menu
-    String cuisineType;
+    /** A queue to hold orders that need to be processed. */
+    protected Queue<Orders> orderQueue;
 
-    // Constructor to initialize the BaseMenu with a list of food items
+    /** A list to hold the food items available on the menu. */
+    protected ArrayList<Food> menuItems;
+
+    /** The type of cuisine represented by this menu. */
+    protected String cuisineType;
+
+    /**
+     * Constructs a new {@code BaseMenu} with a specified list of menu items.
+     *
+     * @param menuItems A list of {@code Food} items to initialize the menu.
+     */
     public BaseMenu(ArrayList<Food> menuItems) {
-        this.menuItems = menuItems;  // Initialize the menuItems list
-        this.orderQueue = new LinkedList<Orders>();  // Initialize the orderQueue as a LinkedList
-    }
-
-    public BaseMenu()
-    {
-        this.menuItems = new ArrayList<Food>();
+        this.menuItems = menuItems;
         this.orderQueue = new LinkedList<>();
     }
 
-    // Method to confirm and add a new order to the orderQueue
+    /**
+     * Default constructor for {@code BaseMenu}, initializing empty menu and order queue.
+     */
+    public BaseMenu() {
+        this.menuItems = new ArrayList<>();
+        this.orderQueue = new LinkedList<>();
+    }
+
+    /**
+     * Adds a new order to the order queue for processing.
+     *
+     * @param newOrder The new {@code Orders} object to add to the queue.
+     */
     public void confirmOrder(Orders newOrder) {
-        orderQueue.add(newOrder);  // Add the new order to the orderQueue
+        orderQueue.add(newOrder);
     }
 
-    public void printMenu()
-    {
+    /**
+     * Prints the menu items. Implementation should be provided by subclasses.
+     */
+    public abstract void printMenu();
 
+    /**
+     * Retrieves a food item by its index on the menu.
+     *
+     * @param index The index of the food item (1-based).
+     * @return The {@code Food} object at the specified index.
+     * @throws IndexOutOfBoundsException if the index is invalid.
+     */
+    public Food getItem(int index) {
+        return menuItems.get(index - 1); // Adjust for 1-based index
     }
 
-    public Food getItem(int i)
-    {
-        return menuItems.get(i - 1);
-    }
-
+    /**
+     * Sets the cuisine type for this menu.
+     *
+     * @param cuisineType A {@code String} representing the cuisine type.
+     */
     public void setCuisineType(String cuisineType) {
         this.cuisineType = cuisineType;
     }
 
+    /**
+     * Retrieves the cuisine type of this menu.
+     *
+     * @return A {@code String} representing the cuisine type.
+     */
     public String getCuisineType() {
         return cuisineType;
     }
 
-    public void addFood(Food food){
+    /**
+     * Adds a new food item to the menu.
+     *
+     * @param food The {@code Food} item to add to the menu.
+     */
+    public void addFood(Food food) {
         menuItems.add(food);
     }
 
-    public void addToQueue(Orders order){
+    /**
+     * Adds a new order to the order queue.
+     *
+     * @param order The {@code Orders} object to add to the queue.
+     */
+    public void addToQueue(Orders order) {
         orderQueue.add(order);
     }
 
-    public void printQueue()
-    {
-        for(Orders order : orderQueue)
-        {
+    /**
+     * Prints all orders currently in the queue.
+     */
+    public void printQueue() {
+        for (Orders order : orderQueue) {
             System.out.println(order);
         }
     }
 
-    public boolean isDelivery()
-    {
+    /**
+     * Indicates whether the menu is for a delivery service.
+     *
+     * @return {@code false} by default; subclasses can override this behavior.
+     */
+    public boolean isDelivery() {
         return false;
     }
 
-    public Orders pullOrder()
-    {
-        if(orderQueue.isEmpty()) {
-            System.out.println("There are currently no orders in queue");
+    /**
+     * Retrieves and removes the next order in the queue.
+     *
+     * @return The next {@code Orders} object in the queue, or {@code null} if the queue is empty.
+     */
+    public Orders pullOrder() {
+        if (orderQueue.isEmpty()) {
+            System.out.println("There are currently no orders in the queue.");
             return null;
         }
         return orderQueue.poll();
